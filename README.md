@@ -2,7 +2,6 @@
 
 ###### This is an example of Docker Swarm Jobs based on .NET Core console app connected to PostgreSQL and configured with CRON intervals. 
 #
-#
 
 ### Development 
 
@@ -16,8 +15,7 @@ $ docker-compose -f docker-compose.dev.yml up
 ##### Run without docker-compose
 ####
 ###### Before start, make sure PostgreSQL is running.
-#
-#
+
 ```sh
 $ docker image build -f Dockerfile.consoleapp -t connector:1 .
 $ docker run -e DATABASE_USER=<DB_USER> -e DATABASE_PASSWORD=<DB_PASS> \ 
