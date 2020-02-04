@@ -1,0 +1,22 @@
+version: "3.2"
+
+services:
+  sample-connector:
+    env_file: ./db.env
+    image: ${JOB_IMAGE}
+    environment:
+    - DATABASE_NAME=sample
+    deploy:
+      mode: replicated
+      replicas: 0
+      labels:
+        - "swarm.cronjob.enable=true"
+        - "swarm.cronjob.schedule=* * * * *"
+        - "swarm.cronjob.skip-running=false"
+      restart_policy:
+        condition: none
+
+networks:
+  default:
+    external:
+      name: connectors-overlay

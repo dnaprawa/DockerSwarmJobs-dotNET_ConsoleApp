@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
+WORKDIR /src
+
+COPY src/ConsoleApp/*.csproj ./ConsoleApp/
+COPY src/FaasTest.Domain/*.csproj ./FaasTest.Domain/
+COPY src/FaasTest.Infrastructure/*.csproj ./FaasTest.Infrastructure/
+
+RUN dotnet restore /src/ConsoleApp/ConsoleApp.csproj
+
+COPY src/ .
+
+RUN dotnet build "/src/ConsoleApp/ConsoleApp.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "/src/ConsoleApp/ConsoleApp.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ConsoleApp.dll"]
