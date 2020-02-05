@@ -6,7 +6,9 @@ services:
     ports:
       - ${DATABASE_PORT}:5432
     volumes:
-      - connectorpgdata:/var/lib/postgresql/data
+     - connectorpgdata:/var/lib/postgresql/data
+    env_file:
+     - .env
     networks:
       - connectornetwork
     restart: on-failure
@@ -16,6 +18,8 @@ services:
       context: ./
       dockerfile: Dockerfile.consoleapp
     image: ${CONNECTOR_IMAGE}
+    env_file:
+     - .env
     restart: on-failure
     networks:
       - connectornetwork

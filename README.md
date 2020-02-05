@@ -3,6 +3,8 @@
 ###### This is an example of Docker Swarm Jobs based on .NET Core console app connected to PostgreSQL and configured with CRON intervals. 
 #
 
+If you want to run it on Windows, you have to switch to Linux containers. https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers
+
 ### Development 
 
 ##### Run with docker-compose

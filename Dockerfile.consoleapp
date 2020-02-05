@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
 WORKDIR /src
 
 COPY src/ConsoleApp/*.csproj ./ConsoleApp/
-COPY src/FaasTest.Domain/*.csproj ./FaasTest.Domain/
-COPY src/FaasTest.Infrastructure/*.csproj ./FaasTest.Infrastructure/
+COPY src/Domain/*.csproj ./Domain/
+COPY src/Infrastructure/*.csproj ./Infrastructure/
 
 RUN dotnet restore /src/ConsoleApp/ConsoleApp.csproj
 
@@ -20,4 +20,7 @@ RUN dotnet publish "/src/ConsoleApp/ConsoleApp.csproj" -c Release -o /app/publis
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 ENTRYPOINT ["dotnet", "ConsoleApp.dll"]
